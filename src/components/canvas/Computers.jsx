@@ -7,6 +7,29 @@ import CanvasLoader from "../Loader";
 const Computers = () => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
+  useEffect(() => {
+    if (computer.scene) {
+      computer.scene.traverse((child) => {
+        if (child.isMesh && child.geometry) {
+          const geometry = child.geometry;
+          const positionAttribute = geometry.attributes.position;
+          
+          if (positionAttribute) {
+            const array = positionAttribute.array;
+            for (let i = 0; i < array.length; i++) {
+              if (isNaN(array[i])) {
+                array[i] = 0;
+              }
+            }
+            positionAttribute.needsUpdate = true;
+            geometry.computeBoundingBox();
+            geometry.computeBoundingSphere();
+          }
+        }
+      });
+    }
+  }, [computer.scene]);
+
   return (
     <mesh>
       <hemisphereLight intensity={0.15} groundColor="black" />

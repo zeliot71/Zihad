@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
@@ -6,6 +6,29 @@ import CanvasLoader from "../Loader";
 
 const Earth = () => {
   const earth = useGLTF("./planet/scene.gltf");
+
+  useEffect(() => {
+    if (earth.scene) {
+      earth.scene.traverse((child) => {
+        if (child.isMesh && child.geometry) {
+          const geometry = child.geometry;
+          const positionAttribute = geometry.attributes.position;
+          
+          if (positionAttribute) {
+            const array = positionAttribute.array;
+            for (let i = 0; i < array.length; i++) {
+              if (isNaN(array[i])) {
+                array[i] = 0;
+              }
+            }
+            positionAttribute.needsUpdate = true;
+            geometry.computeBoundingBox();
+            geometry.computeBoundingSphere();
+          }
+        }
+      });
+    }
+  }, [earth.scene]);
 
   return (
     <primitive object={earth.scene} scale={2.5} position-y={0} rotation-y={0} />
