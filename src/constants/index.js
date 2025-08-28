@@ -154,16 +154,40 @@ const technologies = [
 
 const experiences = [
   {
-    title: "Full-Stack Developer",
-    company_name: "Tekisky",
-    icon: tekisky,
+    title: "Founder & Program Lead",
+    company_name: "Shikhon Utshob – Community Service",
+    icon: web,
     iconBg: "#383E56",
-    date: "Jan 2023 - present",
+    date: "Dec 2024 - Present",
     points: [
-      "Developing and maintaining web applications using MERN technologies.",
-      "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-      "Implementing responsive design and ensuring cross-browser compatibility.",
-      "Participating in code reviews and providing constructive feedback to other developers.",
+      "Launched and led Shikhon Utshob, a platform accredited part of BBLT program by BYLC aimed at making quality education more accessible.",
+      "Coordinated with educators, designers, and volunteers to deliver seamless workshops and training.",
+      "Gained hands-on experience in leadership, tech management, and strategic planning while building a purpose-driven team.",
+      "Strengthened leadership, tech coordination, and strategic planning while building and managing a cross-functional team.",
+      "Monitor analytics to track content performance and optimize posting strategy based on data insights.",
+    ],
+  },
+  {
+    title: "IT Manager | Graphics Designer",
+    company_name: "Dream Bangla Tour & Travels",
+    icon: creator,
+    iconBg: "#E6DEDD",
+    date: "2021 - 2022",
+    points: [
+      "Created captivating visual content, contributing to the agency's branding efforts and enhancing marketing materials.",
+      "Strategically managed social media, engaging audiences and enhancing online visibility for the agency.",
+    ],
+  },
+  {
+    title: "Internship Trainee Full Stack Web Development",
+    company_name: "DevSkill, Dhaka Bangladesh",
+    icon: backend,
+    iconBg: "#383E56",
+    date: "Oct 2022 - Dec 2022",
+    points: [
+      "Practiced competitive programming and OOP using C# to strengthen problem-solving skills.",
+      "Built web applications with ASP.NET and Entity Framework for real-time database integration.",
+      "Used Git for version control and collaborated effectively in a team.",
     ],
   },
 ];
