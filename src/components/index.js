@@ -9,14 +9,18 @@ import Feedbacks from "./Feedbacks";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
 import Training from "./Training";
+import Education from "./Education";
+import Skills from "./Skills";
 
 
 export {
   Hero,
   Navbar,
   About,
+  Education,
   Tech,
   Experience,
+  Skills,
   Works,
   Feedbacks,
   Contact,

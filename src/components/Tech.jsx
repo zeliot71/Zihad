@@ -15,19 +15,15 @@ const Tech = () => {
         y: 80
       },
       {
-
-
-
-        
         opacity: 1,
         y: 0,
-        duration: 2.5,
+        duration: 1.5,
         stagger: 0.1, 
         scrollTrigger: {
           trigger: ".tech-icons-wrapper", 
           start: "top 80%", 
           end: "bottom 70%", 
-          scrub: true, 
+          toggleActions: "play none none reverse",
         },
       }
     );
@@ -35,13 +31,13 @@ const Tech = () => {
 
   return (
     <section>
-      <div className="tech-icons-wrapper flex flex-row flex-wrap justify-center gap-10">
+      <div className="tech-icons-wrapper grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-8 justify-items-center">
         {technologies.map((technology) => (
-          <div className="w-28 h-28" key={technology.name}>
+          <div className="w-20 h-20 hover:scale-110 transition-transform duration-300" key={technology.name}>
             <img
               src={technology.icon}
               alt={technology.name}
-              className="tech-icon w-full h-full object-contain"
+              className="tech-icon w-full h-full object-contain filter hover:drop-shadow-lg"
             />
           </div>
         ))}

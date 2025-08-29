@@ -11,8 +11,29 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
   color-scheme: dark;
+}
 
+/* Performance optimizations */
+img {
+  loading: lazy;
+}
 
+/* Smooth transitions for better UX */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* Improved focus states for accessibility */
+a:focus, button:focus {
+  outline: 2px solid #915EFF;
+  outline-offset: 2px;
+}
+
+/* Better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 

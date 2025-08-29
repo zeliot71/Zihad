@@ -161,7 +161,7 @@ const Training = () => {
       batch: "Batch- 49",
       organization: "Bangladesh Youth Leadership Center",
       program: "Building Bridges Through Leadership Training",
-      description: "Participated in leadership and capacity-building training under BYLC's signature Building Bridges Through Leadership Training (BBLT) program.",
+      description: "Completed leadership and capacity-building training under BYLC's signature Building Bridges Through Leadership Training (BBLT) program.",
       points: [
         "Attended workshops and interactive sessions to build skills in communication, teamwork, and problem-solving.",
         "Contributed to the branding and outreach efforts of the LIA project through creative marketing materials."
@@ -172,10 +172,10 @@ const Training = () => {
       batch: "Cohort - 3",
       organization: "Aspire Leader Institute (Founded by Harvard University)",
       program: "Aspire Leadership Program",
-      description: "Selected for the Aspire Leaders Program, a global leadership development initiative founded at Harvard University.",
+      description: "Completed the Aspire Leaders Program, a global leadership development initiative founded at Harvard University.",
       points: [
         "Engaged in interactive learning modules focused on leadership, critical thinking, and social impact.",
-        "Participating in global peer discussions, fostering cross-cultural collaboration and diverse perspectives."
+        "Participated in global peer discussions, fostering cross-cultural collaboration and diverse perspectives."
       ],
       icon: "A"
     }
