@@ -109,7 +109,7 @@ const Skills = () => {
     },
     {
       title: "Programming Languages",
-      skills: ["C", "C#", "C++", "Java", "JavaScript"]
+      skills: ["C", "C#", "C++", "Java","Python", "JavaScript"]
     },
     {
       title: "Tools & Platforms",
@@ -117,7 +117,7 @@ const Skills = () => {
     },
     {
       title: "Currently Exploring",
-      skills: ["Python", "Data Structures & Algorithms", "AI/ML", "TypeScript"]
+      skills: ["Data Structures & Algorithms", "AI/ML", "TypeScript"]
     }
   ];
 
