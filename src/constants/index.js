@@ -41,24 +41,16 @@ import tekisky from "../assets/company/tekisky.png";
 
 export const navLinks = [
   {
-    id: "about",
+    id: "aboutme",
     title: "About",
   },
   {
-    id: "education",
-    title: "Education",
-  },
-  {
-    id: "work",
-    title: "Work",
-  },
-  {
-    id: "training",
-    title: "Training",
-  },
-  {
-    id: "skills",
+    id: "skills-section",
     title: "Skills",
+  },
+  {
+    id: "blog",
+    title: "Blog",
   },
   {
     id: "contact",
