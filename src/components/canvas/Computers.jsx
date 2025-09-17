@@ -12,19 +12,30 @@ const Computers = () => {
       computer.scene.traverse((child) => {
         if (child.isMesh && child.geometry) {
           const geometry = child.geometry;
-          const positionAttribute = geometry.attributes.position;
           
-          if (positionAttribute) {
-            const array = positionAttribute.array;
-            for (let i = 0; i < array.length; i++) {
-              if (isNaN(array[i])) {
-                array[i] = 0;
+          // Process all geometry attributes, not just position
+          Object.keys(geometry.attributes).forEach(attributeName => {
+            const attribute = geometry.attributes[attributeName];
+            if (attribute && attribute.array) {
+              const array = attribute.array;
+              let hasNaN = false;
+              
+              for (let i = 0; i < array.length; i++) {
+                if (isNaN(array[i])) {
+                  array[i] = 0;
+                  hasNaN = true;
+                }
+              }
+              
+              if (hasNaN) {
+                attribute.needsUpdate = true;
               }
             }
-            positionAttribute.needsUpdate = true;
-            geometry.computeBoundingBox();
-            geometry.computeBoundingSphere();
-          }
+          });
+          
+          // Recompute bounding box and sphere after fixing NaN values
+          geometry.computeBoundingBox();
+          geometry.computeBoundingSphere();
         }
       });
     }
