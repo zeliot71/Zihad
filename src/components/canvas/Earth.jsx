@@ -4,7 +4,7 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
-const Earth = () => {
+const Earth = React.memo(() => {
   const earth = useGLTF("./planet/scene.gltf");
 
   useEffect(() => {
@@ -13,29 +13,19 @@ const Earth = () => {
         if (child.isMesh && child.geometry) {
           const geometry = child.geometry;
           
-          // Process all geometry attributes, not just position
-          Object.keys(geometry.attributes).forEach(attributeName => {
-            const attribute = geometry.attributes[attributeName];
-            if (attribute && attribute.array) {
-              const array = attribute.array;
-              let hasNaN = false;
-              
-              for (let i = 0; i < array.length; i++) {
-                if (isNaN(array[i])) {
-                  array[i] = 0;
-                  hasNaN = true;
-                }
-              }
-              
-              if (hasNaN) {
-                attribute.needsUpdate = true;
+          // Quick NaN fix for critical attributes only
+          ['position', 'normal'].forEach(attrName => {
+            const attr = geometry.attributes[attrName];
+            if (attr?.array) {
+              const arr = attr.array;
+              for (let i = 0; i < arr.length; i++) {
+                if (isNaN(arr[i])) arr[i] = 0;
               }
             }
           });
           
-          // Recompute bounding box and sphere after fixing NaN values
-          geometry.computeBoundingBox();
-          geometry.computeBoundingSphere();
+          // Only recompute if needed
+          if (!geometry.boundingSphere) geometry.computeBoundingSphere();
         }
       });
     }
@@ -44,15 +34,20 @@ const Earth = () => {
   return (
     <primitive object={earth.scene} scale={2.5} position-y={0} rotation-y={0} />
   );
-};
+});
 
 const EarthCanvas = () => {
   return (
     <Canvas
       shadows
-      frameloop='demand'
+      frameloop='always'
       dpr={[1, 2]}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ 
+        preserveDrawingBuffer: true,
+        antialias: false,
+        powerPreference: "high-performance"
+      }}
+      performance={{ min: 0.5 }}
       camera={{
         fov: 45,
         near: 0.1,
@@ -63,13 +58,13 @@ const EarthCanvas = () => {
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           autoRotate
+          autoRotateSpeed={0.5}
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
+          enableDamping={false}
         />
         <Earth />
-
-        <Preload all />
       </Suspense>
     </Canvas>
   );

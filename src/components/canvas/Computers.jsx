@@ -4,7 +4,7 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
-const Computers = () => {
+const Computers = React.memo(() => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
   useEffect(() => {
@@ -13,29 +13,19 @@ const Computers = () => {
         if (child.isMesh && child.geometry) {
           const geometry = child.geometry;
           
-          // Process all geometry attributes, not just position
-          Object.keys(geometry.attributes).forEach(attributeName => {
-            const attribute = geometry.attributes[attributeName];
-            if (attribute && attribute.array) {
-              const array = attribute.array;
-              let hasNaN = false;
-              
-              for (let i = 0; i < array.length; i++) {
-                if (isNaN(array[i])) {
-                  array[i] = 0;
-                  hasNaN = true;
-                }
-              }
-              
-              if (hasNaN) {
-                attribute.needsUpdate = true;
+          // Quick NaN fix for critical attributes only
+          ['position', 'normal'].forEach(attrName => {
+            const attr = geometry.attributes[attrName];
+            if (attr?.array) {
+              const arr = attr.array;
+              for (let i = 0; i < arr.length; i++) {
+                if (isNaN(arr[i])) arr[i] = 0;
               }
             }
           });
           
-          // Recompute bounding box and sphere after fixing NaN values
-          geometry.computeBoundingBox();
-          geometry.computeBoundingSphere();
+          // Only recompute if needed
+          if (!geometry.boundingSphere) geometry.computeBoundingSphere();
         }
       });
     }
@@ -55,13 +45,13 @@ const Computers = () => {
       <pointLight intensity={1} />
       <primitive
         object={computer.scene}
-        scale={0.75} // Keep scale normal for desktop
+        scale={0.75}
         position={[0, -3.27, -1.5]}
         rotation={[-0.01, -0.2, -0.1]}
       />
     </mesh>
   );
-};
+});
 
 const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
@@ -81,23 +71,28 @@ const ComputersCanvas = () => {
   }, []);
 
   return (
-    !isMobile && ( // Hide on mobile screens
+    !isMobile && (
       <Canvas
-        frameloop="demand"
+        frameloop="always"
         shadows
         dpr={[1, 2]}
         camera={{ position: [20, 3, 5], fov: 25 }}
-        gl={{ preserveDrawingBuffer: true }}
+        gl={{ 
+          preserveDrawingBuffer: true,
+          antialias: false,
+          powerPreference: "high-performance"
+        }}
+        performance={{ min: 0.5 }}
       >
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
             enableZoom={false}
             maxPolarAngle={Math.PI / 2}
             minPolarAngle={Math.PI / 2}
+            enableDamping={false}
           />
           <Computers />
         </Suspense>
-        <Preload all />
       </Canvas>
     )
   );
