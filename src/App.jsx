@@ -1,8 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
 
-import { Contact, Hero, Navbar, StarsCanvas } from "./components";
+import { Contact, Hero, Navbar, StarsCanvas, Feedbacks } from "./components";
 import AboutMe from "./components/AboutMe";
-import SkillsSection from "./components/SkillsSection";
+import EducationTraining from "./components/EducationTraining";
+import Portfolio from "./components/Portfolio";
 import Blog from "./components/Blog";
 import Footer from "./components/Footer";
 
@@ -15,7 +16,9 @@ const App = () => {
           <Hero />
         </div>
         <AboutMe />
-        <SkillsSection />
+        <EducationTraining />
+        <Portfolio />
+        <Feedbacks />
         <Blog />
         <div className='relative z-0'>
           <Contact />
