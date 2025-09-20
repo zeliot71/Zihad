@@ -58,9 +58,17 @@ const Portfolio = () => {
 
   const tabs = [
     { id: "projects", label: "Projects", icon: "🚀" },
-    { id: "skills", label: "Tech Stack", icon: "⚡" },
-    { id: "certifications", label: "Certifications", icon: "🏆" },
+    { id: "skills", label: "Skills & Tools", icon: "⚡" },
+    { id: "certifications", label: "Certificates", icon: "🏆" },
   ];
+
+  const skillsData = {
+    "Frontend Technologies": ["HTML", "CSS", "Tailwind CSS", "JavaScript", "React.js", "Three.js", "GSAP", "Framer Motion"],
+    "Backend Technologies": ["Node.js", "Express.js", "ASP.NET Framework", "MongoDB", "MySQL"],
+    "Programming Languages": ["C", "C#", "C++", "Java", "Python", "JavaScript"],
+    "Tools & Platforms": ["Git", "GitHub", "Database Management Studio", "AWS", "Figma"],
+    "Currently Exploring": ["Data Structures & Algorithms", "AI/ML", "TypeScript"]
+  };
 
   const certifications = [
     {
@@ -68,21 +76,56 @@ const Portfolio = () => {
       organization: "Bangladesh Youth Leadership Center",
       date: "2024",
       description: "Leadership and capacity-building training program",
-      badge: "🎯"
+      badge: "🎯",
+      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       title: "Aspire Leadership Program",
       organization: "Aspire Leader Institute (Harvard University)",
       date: "2024",
       description: "Global leadership development initiative",
-      badge: "🌟"
+      badge: "🌟",
+      image: "https://images.pexels.com/photos/267507/pexels-photo-267507.jpeg?auto=compress&cs=tinysrgb&w=400"
     },
     {
       title: "Full Stack Web Development",
       organization: "DevSkill",
       date: "2022",
       description: "Comprehensive web development training",
-      badge: "💻"
+      badge: "💻",
+      image: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=400"
+    },
+    {
+      title: "JavaScript Fundamentals",
+      organization: "FreeCodeCamp",
+      date: "2022",
+      description: "Core JavaScript programming concepts",
+      badge: "📜",
+      image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=400"
+    },
+    {
+      title: "React Development",
+      organization: "Udemy",
+      date: "2023",
+      description: "Modern React development with hooks",
+      badge: "⚛️",
+      image: "https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=400"
+    },
+    {
+      title: "Node.js Backend Development",
+      organization: "Coursera",
+      date: "2023",
+      description: "Server-side development with Node.js",
+      badge: "🟢",
+      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=400"
+    },
+    {
+      title: "Database Management",
+      organization: "MongoDB University",
+      date: "2023",
+      description: "NoSQL database design and management",
+      badge: "🍃",
+      image: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
   ];
 
@@ -138,17 +181,50 @@ const Portfolio = () => {
   );
 
   const CertificationCard = ({ cert, index }) => (
-    <div className="bg-tertiary p-6 rounded-2xl shadow-card hover:shadow-2xl transition-all duration-300 hover:scale-105">
-      <div className="flex items-start gap-4">
-        <div className="text-4xl">{cert.badge}</div>
-        <div className="flex-1">
-          <h3 className="text-white text-xl font-bold mb-2 hover:text-purple-400 transition-colors duration-200">
-            {cert.title}
-          </h3>
-          <p className="text-purple-400 font-semibold mb-1">{cert.organization}</p>
-          <p className="text-secondary text-sm mb-3">{cert.date}</p>
-          <p className="text-white-100 text-sm leading-relaxed">{cert.description}</p>
+    <div className="bg-tertiary rounded-2xl overflow-hidden shadow-card hover:shadow-2xl transition-all duration-300 hover:scale-105 w-full max-w-sm mx-auto">
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={cert.image}
+          alt={cert.title}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+        />
+        <div className="absolute top-4 left-4">
+          <div className="bg-black/70 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
+            <span className="text-2xl">{cert.badge}</span>
+          </div>
         </div>
+      </div>
+      
+      <div className="p-6">
+        <h3 className="text-white text-lg font-bold mb-2 hover:text-purple-400 transition-colors duration-200">
+          {cert.title}
+        </h3>
+        <p className="text-purple-400 font-semibold text-sm mb-1">{cert.organization}</p>
+        <p className="text-secondary text-xs mb-3">{cert.date}</p>
+        <p className="text-white-100 text-sm leading-relaxed">{cert.description}</p>
+        
+        <div className="mt-4 pt-4 border-t border-gray-700">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+            <span className="text-green-400 text-xs font-medium">Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const SkillCategory = ({ title, skills }) => (
+    <div className="bg-tertiary p-6 rounded-2xl shadow-card hover:shadow-2xl transition-all duration-300">
+      <h3 className="text-white text-lg font-bold mb-4 text-center hover:text-purple-400 transition-colors duration-200">{title}</h3>
+      <div className="flex flex-wrap gap-2 justify-center">
+        {skills.map((skill, skillIndex) => (
+          <span
+            key={skillIndex}
+            className="bg-black-200 text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-300 cursor-default"
+          >
+            {skill}
+          </span>
+        ))}
       </div>
     </div>
   );
@@ -180,7 +256,7 @@ const Portfolio = () => {
         );
       case "certifications":
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {certifications.map((cert, index) => (
               <CertificationCard key={`cert-${index}`} cert={cert} index={index} />
             ))}
@@ -188,10 +264,21 @@ const Portfolio = () => {
         );
       case "skills":
         return (
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-8 justify-items-center">
-            {technologies.map((tech, index) => (
-              <TechCard key={`tech-${index}`} tech={tech} index={index} />
-            ))}
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(skillsData).map(([category, skills], index) => (
+                <SkillCategory key={`skill-category-${index}`} title={category} skills={skills} />
+              ))}
+            </div>
+            
+            <div className="mt-12">
+              <h3 className="text-white text-2xl font-bold text-center mb-8">Technologies I Use</h3>
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-8 justify-items-center">
+                {technologies.map((tech, index) => (
+                  <TechCard key={`tech-${index}`} tech={tech} index={index} />
+                ))}
+              </div>
+            </div>
           </div>
         );
       default:
@@ -212,7 +299,7 @@ const Portfolio = () => {
 
       {/* Tabs */}
       <div ref={tabsRef} className="flex justify-center mb-12">
-        <div className="bg-black-200 p-2 rounded-2xl flex gap-2">
+        <div className="bg-black-200 p-2 rounded-2xl flex gap-2 flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab.id}

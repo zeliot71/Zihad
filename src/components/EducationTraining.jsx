@@ -56,6 +56,7 @@ const EducationTraining = () => {
   const tabs = [
     { id: "education", label: "Education", icon: "🎓" },
     { id: "training", label: "Training & Fellowship", icon: "🏆" },
+    { id: "work", label: "Work Experience", icon: "💼" },
   ];
 
   const educationData = [
@@ -80,7 +81,7 @@ const EducationTraining = () => {
       batch: "Batch- 49",
       organization: "Bangladesh Youth Leadership Center",
       program: "Building Bridges Through Leadership Training",
-      description: "Completed leadership and capacity-building training under BYLC's signature Building Bridges Through Leadership Training (BBLT) program.",
+      description: "Participated in leadership and capacity-building training under BYLC's signature Building Bridges Through Leadership Training (BBLT) program.",
       points: [
         "Attended workshops and interactive sessions to build skills in communication, teamwork, and problem-solving.",
         "Contributed to the branding and outreach efforts of the LIA project through creative marketing materials."
@@ -91,12 +92,51 @@ const EducationTraining = () => {
       batch: "Cohort - 3",
       organization: "Aspire Leader Institute (Founded by Harvard University)",
       program: "Aspire Leadership Program",
-      description: "Completed the Aspire Leaders Program, a global leadership development initiative founded at Harvard University.",
+      description: "Completed Aspire Leaders Program, a global leadership development initiative founded at Harvard University.",
       points: [
         "Engaged in interactive learning modules focused on leadership, critical thinking, and social impact.",
         "Participated in global peer discussions, fostering cross-cultural collaboration and diverse perspectives."
       ],
       icon: "A"
+    }
+  ];
+
+  const workData = [
+    {
+      title: "Founder & Program Lead",
+      company: "Shikhon Utshob – Community Service",
+      duration: "Dec 2024 - Present",
+      type: "current",
+      description: "Launched and led Shikhon Utshob, a platform accredited part of BBLT program by BYLC aimed at making quality education more accessible.",
+      points: [
+        "Coordinated with educators, designers, and volunteers to deliver seamless workshops and training.",
+        "Gained hands-on experience in leadership, tech management, and strategic planning while building a purpose-driven team.",
+        "Strengthened leadership, tech coordination, and strategic planning while building and managing a cross-functional team.",
+        "Monitor analytics to track content performance and optimize posting strategy based on data insights."
+      ]
+    },
+    {
+      title: "IT Manager | Graphics Designer",
+      company: "Dream Bangla Tour & Travels",
+      duration: "2021 - 2022",
+      type: "completed",
+      description: "Created captivating visual content and managed IT operations for the travel agency.",
+      points: [
+        "Created captivating visual content, contributing to the agency's branding efforts and enhancing marketing materials.",
+        "Strategically managed social media, engaging audiences and enhancing online visibility for the agency."
+      ]
+    },
+    {
+      title: "Internship Trainee Full Stack Web Development",
+      company: "DevSkill, Dhaka Bangladesh",
+      duration: "Oct 2022 - Dec 2022",
+      type: "completed",
+      description: "Comprehensive full-stack web development training program.",
+      points: [
+        "Practiced competitive programming and OOP using C# to strengthen problem-solving skills.",
+        "Built web applications with ASP.NET and Entity Framework for real-time database integration.",
+        "Used Git for version control and collaborated effectively in a team."
+      ]
     }
   ];
 
@@ -165,6 +205,43 @@ const EducationTraining = () => {
     </div>
   );
 
+  const WorkCard = ({ work, index }) => (
+    <div className="bg-tertiary p-8 rounded-3xl w-full max-w-lg mx-auto shadow-card hover:shadow-2xl transition-all duration-300 hover:scale-105">
+      <div className="flex items-start justify-between mb-6">
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-2">
+            <div className={`w-4 h-4 rounded-full ${work.type === 'current' ? 'bg-green-500 animate-pulse' : 'bg-orange-500'}`}></div>
+            <span className={`text-xs font-medium ${work.type === 'current' ? 'text-green-400' : 'text-orange-400'}`}>
+              {work.type === 'current' ? 'Current' : 'Completed'}
+            </span>
+          </div>
+          <h3 className="text-white text-xl font-bold leading-tight mb-2 hover:text-purple-400 transition-colors duration-200">{work.title}</h3>
+          <p className="text-secondary text-sm font-medium mb-1">{work.company}</p>
+          <p className="text-gray-400 text-xs">{work.duration}</p>
+        </div>
+        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center flex-shrink-0">
+          <span className="text-white font-bold text-lg">💼</span>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <p className="text-secondary text-sm leading-relaxed mb-4">{work.description}</p>
+      </div>
+
+      <ul className="space-y-2">
+        {work.points.map((point, pointIndex) => (
+          <li
+            key={pointIndex}
+            className="text-white-100 text-sm flex items-start gap-2"
+          >
+            <span className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-2 flex-shrink-0"></span>
+            <span className="leading-relaxed">{point}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
   const renderContent = () => {
     switch (activeTab) {
       case "education":
@@ -180,6 +257,14 @@ const EducationTraining = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 justify-items-center">
             {trainingData.map((training, index) => (
               <TrainingCard key={`training-${index}`} training={training} index={index} />
+            ))}
+          </div>
+        );
+      case "work":
+        return (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center">
+            {workData.map((work, index) => (
+              <WorkCard key={`work-${index}`} work={work} index={index} />
             ))}
           </div>
         );
@@ -201,12 +286,12 @@ const EducationTraining = () => {
 
       {/* Tabs */}
       <div ref={tabsRef} className="flex justify-center mb-12">
-        <div className="bg-black-200 p-2 rounded-2xl flex gap-2">
+        <div className="bg-black-200 p-2 rounded-2xl flex gap-2 flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 ${
+              className={`px-4 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 ${
                 activeTab === tab.id
                   ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg"
                   : "text-secondary hover:text-white hover:bg-tertiary"
