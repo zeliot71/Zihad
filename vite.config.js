@@ -19,13 +19,7 @@ export default defineConfig({
     target: 'es2015',
     sourcemap: false,
     minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
-      }
-    },
+    minify: 'esbuild',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -34,6 +28,13 @@ export default defineConfig({
           animations: ['gsap', 'framer-motion']
         },
       },
+      onwarn(warning, warn) {
+        // Suppress "use client" directive warnings from framer-motion
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
     },
     chunkSizeWarningLimit: 1000,
     assetsInlineLimit: 4096
@@ -41,6 +42,10 @@ export default defineConfig({
   optimizeDeps: {
     include: ['three', '@react-three/fiber', '@react-three/drei', 'gsap'],
     exclude: ['@react-three/rapier'],
+  define: {
+    // This helps with some build warnings
+    global: 'globalThis',
+  },
     force: true
   },
   esbuild: {
